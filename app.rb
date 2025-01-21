@@ -6,6 +6,19 @@ require 'sinatra/reloader'
 
 enable :sessions
 
-get ('/word') do
-    slim(:temp)
+get ('/') do
+    slim(:start)
+end
+
+post ('/') do 
+
+end
+
+get ('/card') do 
+    db = SQLite3::Database.new("db/cards.db")
+    slim(:card)
+end
+
+get ('/collection') do
+    slim(:collection)
 end
