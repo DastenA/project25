@@ -1,1 +1,9 @@
 p CARDS 
+
+/ ol
+/   - cards.each do |card|
+/     li 
+/       a href="card/#{card['card_id']}"
+/       a href="card/#{card['card_id']}/edit" Uppdatera 
+/       form method="POST" action="card/#{card['card_id']}/delete" 
+/         input type="submit" value="Delete"

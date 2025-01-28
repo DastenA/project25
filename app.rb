@@ -16,7 +16,10 @@ end
 
 get ('/card') do 
     db = SQLite3::Database.new("db/cards.db")
-    slim(:card)
+    db.results_as_hash = true
+    result = db.execute("SELECT * FROM cards")
+    p result
+    slim(:card,locals:{key:result})
 end
 
 get ('/collection') do
