@@ -10,7 +10,7 @@ header {
 
 nav {
     height:100px;
-    background:rgba(80,80,80,0.2);
+    background:rgba(255, 0, 0, 0.813);
     display:flex;
     justify-content: space-around;
     align-items:center;
