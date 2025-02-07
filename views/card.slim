@@ -3,5 +3,7 @@ p CARDS
 ol
   - cards.each do |card|
     li
-      a href=card['cards'] = card['title']
+      a href="/collection" #{card['card_name']}, #{card['card_series']},  #{card['card_value']}
+    
+
 

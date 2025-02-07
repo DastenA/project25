@@ -19,7 +19,7 @@ get ('/card') do
     db.results_as_hash = true
     result = db.execute("SELECT * FROM cards")
     p result
-    slim(:card,locals:{key:result})
+    slim(:"card",locals:{cards:result})
 end
 
 get ('/collection') do
