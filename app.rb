@@ -20,6 +20,7 @@ get ('/card') do
     result = db.execute("SELECT * FROM cards")
     p result
     slim(:"card",locals:{cards:result})
+
 end
 
 get ('/collection') do

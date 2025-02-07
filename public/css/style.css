@@ -1,22 +1,22 @@
 * {
     font-size: 25px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: deepskyblue;
     text-decoration: none;
 }
 
 header {
-    background-color: black;
+    /*background-color: black;*/
 }
 
 nav {
     height:100px;
-    background:rgba(255, 0, 0, 0.813);
+    background: rgb(165, 165, 165);
     display:flex;
     justify-content: space-around;
     align-items:center;
+    border-radius: 5px;
 }
 
 body {
-    background-color: rgb(120, 3, 229);
+    background-color: beige
 }
