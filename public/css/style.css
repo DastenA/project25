@@ -4,10 +4,6 @@
     text-decoration: none;
 }
 
-header {
-    /*background-color: black;*/
-}
-
 nav {
     height:100px;
     background: rgb(165, 165, 165);
@@ -19,4 +15,9 @@ nav {
 
 body {
     background-color: beige
+}
+
+ul {
+    padding: 10px;
+    margin: 10px;
 }

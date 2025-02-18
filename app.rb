@@ -2,7 +2,7 @@ require 'sinatra'
 require 'slim'
 require 'sqlite3'
 require 'sinatra/reloader'
-#require 'becrypt'
+require 'bcrypt'
 
 enable :sessions
 
@@ -25,4 +25,8 @@ end
 
 get ('/collection') do
     slim(:collection)
+end
+
+get ('/login') do
+    slim(:login)
 end
