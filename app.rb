@@ -10,10 +10,6 @@ get ('/') do
     slim(:start)
 end
 
-post ('/') do 
-
-end
-
 get ('/card') do 
     db = SQLite3::Database.new("db/cards.db")
     db.results_as_hash = true
@@ -41,20 +37,42 @@ get ('/login') do
     slim(:login)
 end
 
-post ('/login') do 
+post('/users_new') do
+    username = params[:username]
+    password = params[:password]
+    password_confirm = params[:password_confirm]
+
+
+    if password == password_confirm
+        #lägg till användare
+        password_digest = BCrypt::Password.create(password)
+        db= SQLite3::Database.new('db/cards.db')
+        db.execute("INSERT INTO users (username,password) VALUES (?,?)",[username,password_digest])
+        redirect('/')
+    
+    else
+        p "Lösenorden matchade inte"
+    end
+
+end
+
+post('/login') do 
     username = params[:username]
     password = params[:password]
     db = SQLite3::Database.new('db/cards.db')
     db.results_as_hash = true
     result = db.execute("SELECT * FROM users WHERE username = ?",username).first
-    pwdigest = result["pwdigest"]
-    id = result["id"]
+    password = result["password"]
+    id = result["user_id"]
+  
+    if BCrypt::Password.new(password) == password
 
-    if BCrypt::Password.new(pwdigest) == password
-    session[:id] = id
-        
-    redirect('/')
+      session[:user_id] = id
+      session[:username] = username
+
+      redirect('/')
     else
-    "Fel lösenord"
+      "Fel lösenord"
     end
 end
+  
