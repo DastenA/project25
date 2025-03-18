@@ -32,47 +32,45 @@ get ('/collection') do
     slim(:collection)
 end
 
-get ('/login') do
+get ('/account') do
 
-    slim(:login)
+    slim(:account)
 end
 
-post('/users_new') do
+post('/users/new') do
     username = params[:username]
     password = params[:password]
     password_confirm = params[:password_confirm]
-
 
     if password == password_confirm
         #lägg till användare
         password_digest = BCrypt::Password.create(password)
         db= SQLite3::Database.new('db/cards.db')
         db.execute("INSERT INTO users (username,password) VALUES (?,?)",[username,password_digest])
-        redirect('/')
-    
+        redirect('/account')
     else
-        p "Lösenorden matchade inte"
+        "PASSWORD DOES NOT FIT"
     end
 
 end
 
-post('/login') do 
+post('/account') do 
     username = params[:username]
-    password = params[:password]
+    password_check = params[:password]
+
     db = SQLite3::Database.new('db/cards.db')
     db.results_as_hash = true
     result = db.execute("SELECT * FROM users WHERE username = ?",username).first
     password = result["password"]
-    id = result["user_id"]
+    user_id = result["user_id"]
   
-    if BCrypt::Password.new(password) == password
+    if BCrypt::Password.new(password) == password_check
 
-      session[:user_id] = id
       session[:username] = username
 
-      redirect('/')
+      redirect('/account')
     else
-      "Fel lösenord"
+      "WRONG PASSWORD"
     end
 end
   
