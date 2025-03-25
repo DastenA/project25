@@ -1,7 +1,9 @@
-
-div id="div"
-  ol id="list"
+div id="card_div"
+  ol id="card_list"
     - cards.each do |card|
       ul 
-        img src="#{card["image_url"]}" alt="popo"/
-        a href="/collection" class="character_list" #{card['card_name']}, #{card['card_series']},  #{card['card_value']},
+        img src="#{card["image_url"]}" alt="card image"/
+        a href="/collection" class="card_list" #{card['card_name']}, 
+          #{card['card_series']}, 
+          #{card['card_value']},
+  a href="/card_creation" class="card_creation_link" Card Creation 

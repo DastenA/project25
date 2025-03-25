@@ -4,6 +4,11 @@
     text-decoration: none;
 }
 
+p {
+    padding: 5px;
+    margin: 5px;
+}
+
 nav {
     height:100px;
     background: rgb(165, 165, 165);
@@ -18,15 +23,13 @@ body {
 }
 
 ul {
-    padding: 10px;
-    margin: 10px;
+    padding: 20px;
 }
 
 img {
     width: 250px;
     height: 300px;
     border: solid black 2px;
-
 }
 
 form {
@@ -34,19 +37,29 @@ form {
     margin: 10px;
 }
 
-.character_list {
-    font-size: 20px;
+.card_list {
+    font-size: 15px;
     display: grid;
     justify-content: center;
 }
 
-#div {
+.card_creation {
+    border: solid black 2px;
+
+}
+
+.card_creation_link {
+    font-size: 30px;
+}
+
+#card_list {
+    column-count: 4;
+}
+
+#card_div {
     display: flex;
     flex-direction: column;
     height: 150vh;
-    gap: 2px;
-}
-
-#list {
-    column-count: 4;
+    align-items: center;
+    padding-right: 35px;
 }

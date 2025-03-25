@@ -14,18 +14,8 @@ get ('/card') do
     db = SQLite3::Database.new("db/cards.db")
     db.results_as_hash = true
     result = db.execute("SELECT * FROM cards")
-    p result
     slim(:"card",locals:{cards:result})
 
-end
-
-get ('/card/:name') do 
-    db = SQLite3::Database.new("db/cards.db")
-    db.results_as_hash = true
-    result = db.execute("SELECT card_name FROM cards")
-    name = params[:name]
-    id = params[:id]
-    slim(:character)
 end
 
 get ('/collection') do
@@ -37,7 +27,37 @@ get ('/account') do
     slim(:account)
 end
 
-post('/users/new') do
+get ('/card_creation') do
+
+    slim(:card_creation)
+end
+
+=begin
+post ('/card_creation/new') 
+    card_name = params[:card_name]
+    card_series = params[:card_series]
+    card_value = params[:card_value]
+    img_url = params[:img_url]
+
+
+    db = SQLite3::Database.new('db/cards.db')
+    db.execute("INSERT INTO cards (card_name,card_series,card_value,img_url) VALUES (?,?,?,?)",[card_name,card_series,card_value,img_url])
+    redirect('/card_creation')
+end
+
+
+post('/upload_image') do
+    #Skapa en sträng med join "./public/uploaded_pictures/cat.png"
+    path = File.join("./public/uploaded_pictures/",params[:file][:filename])
+    
+    #Spara bilden (skriv innehållet i tempfile till destinationen path)
+    File.write(path,File.read(params[:file][:tempfile]))
+    
+    redirect('/upload_image')
+   end
+=end
+
+post ('/create_account') do
     username = params[:username]
     password = params[:password]
     password_confirm = params[:password_confirm]
@@ -45,7 +65,7 @@ post('/users/new') do
     if password == password_confirm
         #lägg till användare
         password_digest = BCrypt::Password.create(password)
-        db= SQLite3::Database.new('db/cards.db')
+        db = SQLite3::Database.new('db/cards.db')
         db.execute("INSERT INTO users (username,password) VALUES (?,?)",[username,password_digest])
         redirect('/account')
     else
@@ -54,7 +74,7 @@ post('/users/new') do
 
 end
 
-post('/account') do 
+post ('/log_in_account') do 
     username = params[:username]
     password_check = params[:password]
 
@@ -73,4 +93,3 @@ post('/account') do
       "WRONG PASSWORD"
     end
 end
-  
