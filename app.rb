@@ -6,64 +6,71 @@ require 'bcrypt'
 
 enable :sessions
 
-get ('/') do
+get('/') do
     slim(:start)
 end
 
-get ('/card') do 
+get('/card') do 
     db = SQLite3::Database.new("db/cards.db")
     db.results_as_hash = true
     result = db.execute("SELECT * FROM cards")
-    slim(:"card",locals:{cards:result})
+    slim(:"card/index",locals:{cards:result})
 
 end
 
-get ('/collection') do
+get('/collection') do
     slim(:collection)
 end
 
-get ('/account') do
+post('/card/:id/update') do
+    id = params[:id].to_i
+    card_name = params[:card_name]
+    card_series = params[:card_series]
+    card_value = params[:card_value].to_i
+    db = SQLite3::Database.new("db/cards.db")
+    db.execute("UPDATE cards SET card_name=?,card_series=?,card_value=? WHERE card_id = ?",[card_name,card_series,card_value,id])
+    redirect('/card')
+    
+end
 
+get('/card/:id/edit') do 
+    id = params[:id].to_i
+    db = SQLite3::Database.new("db/cards.db")
+    db.results_as_hash = true
+    result = db.execute("SELECT * FROM cards WHERE card_id = ?",id).first
+    p result
+    slim(:"/card/edit", locals:{result:result})
+  end
+
+
+
+get('/card/new') do
+    slim(:"card/new")
+end
+
+
+post('/card/new') do
+    card_name = params[:card_name]
+    card_series = params[:card_series]
+    card_value = params[:card_value].to_i
+    image_url = params[:img_url]
+
+    db = SQLite3::Database.new('db/cards.db')
+    db.execute("INSERT INTO cards (card_name,card_series,card_value,image_url) VALUES (?,?,?,?)",[card_name,card_series,card_value,image_url])
+    redirect('/card')
+end
+
+
+get('/account') do
     slim(:account)
 end
 
-get ('/card_creation') do
-
-    slim(:card_creation)
-end
-
-=begin
-post ('/card_creation/new') 
-    card_name = params[:card_name]
-    card_series = params[:card_series]
-    card_value = params[:card_value]
-    img_url = params[:img_url]
-
-
-    db = SQLite3::Database.new('db/cards.db')
-    db.execute("INSERT INTO cards (card_name,card_series,card_value,img_url) VALUES (?,?,?,?)",[card_name,card_series,card_value,img_url])
-    redirect('/card_creation')
-end
-=end
-
-post ('/upload_image') do
-    #Skapa en sträng med join "./public/uploaded_pictures/cat.png"
-    path = File.join("./public/img/",params[:file][:filename])
-    
-    #Spara bilden (skriv innehållet i tempfile till destinationen path)
-    File.write(path,File.read(params[:file][:tempfile]))
-    
-    redirect('/upload_image')
-end
-
-
-post ('/create_account') do
+post('/create_account') do
     username = params[:username]
     password = params[:password]
     password_confirm = params[:password_confirm]
 
     if password == password_confirm
-        #lägg till användare
         password_digest = BCrypt::Password.create(password)
         db = SQLite3::Database.new('db/cards.db')
         db.execute("INSERT INTO users (username,password) VALUES (?,?)",[username,password_digest])
@@ -74,7 +81,7 @@ post ('/create_account') do
 
 end
 
-post ('/log_in_account') do 
+post('/log_in_account') do 
     username = params[:username]
     password_check = params[:password]
 
