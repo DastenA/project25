@@ -44,18 +44,18 @@ post ('/card_creation/new')
     db.execute("INSERT INTO cards (card_name,card_series,card_value,img_url) VALUES (?,?,?,?)",[card_name,card_series,card_value,img_url])
     redirect('/card_creation')
 end
+=end
 
-
-post('/upload_image') do
+post ('/upload_image') do
     #Skapa en sträng med join "./public/uploaded_pictures/cat.png"
-    path = File.join("./public/uploaded_pictures/",params[:file][:filename])
+    path = File.join("./public/img/",params[:file][:filename])
     
     #Spara bilden (skriv innehållet i tempfile till destinationen path)
     File.write(path,File.read(params[:file][:tempfile]))
     
     redirect('/upload_image')
-   end
-=end
+end
+
 
 post ('/create_account') do
     username = params[:username]
