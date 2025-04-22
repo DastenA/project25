@@ -1,1 +1,10 @@
 p YOUR COLLECTION 
+
+div id="card_div"
+  ol id="card_list"
+    - collections.each do |collection|
+      ul 
+        img src="#{collection["image_url"]}" alt="card image"/
+        p class="card_list" #{collection['card_name']}, 
+          #{collection['card_series']}, 
+          #{collection['card_value']},

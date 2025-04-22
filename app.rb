@@ -22,17 +22,6 @@ get('/collection') do
     slim(:collection)
 end
 
-post('/card/:id/update') do
-    id = params[:id].to_i
-    card_name = params[:card_name]
-    card_series = params[:card_series]
-    card_value = params[:card_value].to_i
-    db = SQLite3::Database.new("db/cards.db")
-    db.execute("UPDATE cards SET card_name=?,card_series=?,card_value=? WHERE card_id = ?",[card_name,card_series,card_value,id])
-    redirect('/card')
-    
-end
-
 get('/card/:id/edit') do 
     id = params[:id].to_i
     db = SQLite3::Database.new("db/cards.db")
@@ -42,6 +31,31 @@ get('/card/:id/edit') do
     slim(:"/card/edit", locals:{result:result})
 end
 
+post('/card/:id/update') do
+    id = params[:id].to_i
+    card_name = params[:card_name]
+    card_series = params[:card_series]
+    card_value = params[:card_value].to_i
+    db = SQLite3::Database.new("db/cards.db")
+    db.execute("UPDATE cards SET card_name=?,card_series=?,card_value=? WHERE card_id = ?",[card_name,card_series,card_value,id])
+    redirect('/card')
+end
+
+get('/card/:id/remove') do 
+    id = params[:id].to_i
+    db = SQLite3::Database.new("db/cards.db")
+    db.results_as_hash = true
+    result = db.execute("SELECT * FROM cards WHERE card_id = ?",id).first
+    p result
+    slim(:"/card/delete", locals:{result:result})
+end
+
+post('/card/:id/delete') do
+    id = params[:id].to_i
+    db = SQLite3::Database.new("db/cards.db")
+    db.execute("DELETE FROM cards WHERE card_id = ?",id)
+    redirect('/card')
+end
 
 get('/card/new') do
     slim(:"card/new")
@@ -52,13 +66,14 @@ post('/card/new') do
     card_name = params[:card_name]
     card_series = params[:card_series]
     card_value = params[:card_value].to_i
-    image_url = params[:img_url]
+    image_url = params[:image_url]
 
+    text = "./img/"
+    text << image_url 
     db = SQLite3::Database.new('db/cards.db')
-    db.execute("INSERT INTO cards (card_name,card_series,card_value,image_url) VALUES (?,?,?,?)",[card_name,card_series,card_value,image_url])
+    db.execute("INSERT INTO cards (card_name,card_series,card_value,image_url) VALUES (?,?,?,?)",[card_name,card_series,card_value,text])
     redirect('/card')
 end
-
 
 get('/account') do
     slim(:account)
