@@ -40,8 +40,7 @@ get('/card/:id/edit') do
     result = db.execute("SELECT * FROM cards WHERE card_id = ?",id).first
     p result
     slim(:"/card/edit", locals:{result:result})
-  end
-
+end
 
 
 get('/card/new') do
