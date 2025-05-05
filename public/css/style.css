@@ -37,6 +37,15 @@ form {
     margin: 10px;
 }
 
+.form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
 .card_list {
     font-size: 15px;
     display: grid;

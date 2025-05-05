@@ -1,13 +1,27 @@
-    form action="/create_account" method="post"
-        input type="text" name="username" placeholder="Enter Username"
-        input type="password" name="password" placeholder="Enter Password"
-        input type="password" name="password_confirm" placeholder="Enter Password Again"
+h2 Create Account
+form action="/create_account" method="post"
+  .form-group
+    label for="username" Username:
+    input type="text" name="username" placeholder="Enter Username"
 
-        input type="submit" value="Sign in thanks!"
-   
-    p Once you have finished creating your account you can type your username and password below in order to log in.
-    form action="log_in_account" method="post"
-        input type="text" name="username" placeholder="Enter Username"
-        input type="password" name="password" placeholder="Enter Password"
-        input type="submit" value="Log in thanks!"
-    
+  .form-group
+    label for="password" Password:
+    input type="password" name="password" placeholder="Enter Password"
+
+  .form-group
+    label for="password_confirm" Confirm Password:
+    input type="password" name="password_confirm" placeholder="Enter Password Again"
+
+  input type="submit" value="Create Account"
+
+h2 Log In
+form action="/log_in_account" method="post"
+  .form-group
+    label for="username" Username:
+    input type="text" name="username" placeholder="Enter Username"
+
+  .form-group
+    label for="password" Password:
+    input type="password" name="password" placeholder="Enter Password"
+
+  input type="submit" value="Log In"

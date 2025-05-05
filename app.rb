@@ -15,11 +15,11 @@ get('/card') do
     db.results_as_hash = true
     result = db.execute("SELECT * FROM cards")
     slim(:"card/index",locals:{cards:result})
-
 end
 
 get('/collection') do
     slim(:collection)
+
 end
 
 get('/card/:id/edit') do 
@@ -78,6 +78,9 @@ end
 get('/account') do
     slim(:account)
 end
+
+
+  
 
 post('/create_account') do
     username = params[:username]
